@@ -1,0 +1,22 @@
+{
+    "name": "torniketsava/ecommerc-website",
+    "autoload": {
+    "psr-4": {
+        "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "tcavaa",
+            "email": "tsava.tornike@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.6",
+        "webonyx/graphql-php": "^15.20",
+        "nikic/fast-route": "^1.3"
+    },
+    "scripts": {
+        "start": "php -S localhost:8000 -t public"
+    }
+}
