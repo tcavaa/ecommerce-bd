@@ -9,8 +9,7 @@ class ProductsResolver
     public static function index(?string $category = null): array
     {   
         $product = new Product();
-        $data = $product->getAll();
-        //print_r($product->getAll($category));
+        $data = $product->getAll($category);
         return $data;
     }
 
