@@ -10,6 +10,7 @@ class ProductsResolver
     {   
         $product = new Product();
         $data = $product->getAll($category);
+        
         return $data;
     }
 
