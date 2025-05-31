@@ -1,4 +1,0 @@
-[22-May-2025 19:57:50 UTC] OrdersResolver error: App\GraphQL\Resolvers\OrdersResolver::addOrder(): Return value must be of type array, int returned
-[22-May-2025 20:23:02 UTC] GraphQL Error: No GraphQL query provided.
-#0 /Users/torniketsava/Desktop/ecommercWebsite/public/index.php(69): App\GraphQL\GraphQL::handle(Array)
-#1 {main}
