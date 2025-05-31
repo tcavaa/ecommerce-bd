@@ -19,7 +19,7 @@ abstract class BaseModel
         return $this->db->query("SELECT * FROM {$this->table}")->get();
     }
 
-    public function getById($id): array 
+    public function getById(string $id): array 
     {
         return $this->db->query(
             "SELECT * FROM {$this->table} WHERE id = :id", ['id' => $id]

@@ -22,7 +22,7 @@ class OrdersResolver
             $orderResult = $orderModel->add($orderData);
 
             if (!$orderResult['success']) {
-                return false;
+                return 0;
             }
 
             $orderId = $orderResult['id'];

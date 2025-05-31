@@ -13,8 +13,10 @@ use GraphQL\Type\SchemaConfig;
 use RuntimeException;
 use Throwable;
 
-class GraphQL {
-    static public function handle() {
+class GraphQL 
+{
+    public static function handle() 
+    {
         try {
             $productType = new ProductType();
 
@@ -32,14 +34,14 @@ class GraphQL {
                         'type' => Type::listOf(new CategoryType()),
                         'resolve' => static fn () => Resolvers\CategoriesResolver::index(),
                     ],
-                        'products' => [
+                    'products' => [
                         'type' => Type::listOf($productType),
                         'args' => [
                             'category' => ['type' => Type::string()],
                         ],
                         'resolve' => static fn ($rootValue, array $args) => Resolvers\ProductsResolver::index($args['category'] ?? null),
                     ],
-                        'product' => [
+                    'product' => [
                         'type' => $productType,
                         'args' => [
                             'id' => ['type' => Type::nonNull(Type::string())],
@@ -62,7 +64,7 @@ class GraphQL {
                     ],
                     'placeOrder' => [
                         'type' => Type::string(),
-                       'args' => [
+                        'args' => [
                             'input' => Type::nonNull(new OrderInputType()),
                         ],
                         'resolve' => static fn ($rootValue, array $args) => Resolvers\OrdersResolver::addOrder($args['input']),
@@ -77,21 +79,21 @@ class GraphQL {
             );
         
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            $query = $_GET['query'] ?? null;
-            $variables = isset($_GET['variables']) ? json_decode($_GET['variables'], true) : null;
-        } else {
-            $rawInput = file_get_contents('php://input');
-            if ($rawInput === false) {
-                throw new RuntimeException('Failed to get php://input');
+                $query = $_GET['query'] ?? null;
+                $variables = isset($_GET['variables']) ? json_decode($_GET['variables'], true) : null;
+            } else {
+                $rawInput = file_get_contents('php://input');
+                if ($rawInput === false) {
+                    throw new RuntimeException('Failed to get php://input');
+                }
+                $input = json_decode($rawInput, true);
+                $query = $input['query'] ?? null;
+                $variables = $input['variables'] ?? null;
             }
-            $input = json_decode($rawInput, true);
-            $query = $input['query'] ?? null;
-            $variables = $input['variables'] ?? null;
-        }
 
-        if (!$query) {
-            throw new RuntimeException('No GraphQL query provided.');
-        }
+            if (!$query) {
+                throw new RuntimeException('No GraphQL query provided.');
+            }
         
             $rootValue = ['prefix' => 'You said: '];
             $result = GraphQLBase::executeQuery($schema, $query, $rootValue, null, $variables);
@@ -104,7 +106,7 @@ class GraphQL {
                 'errors' => [
                     [
                         'message' => 'Internal server error',
-                        'internalMessage' => $e->getMessage(), // Optional: remove in production
+                        'internalMessage' => $e->getMessage(),
                     ]
                 ]
             ];
