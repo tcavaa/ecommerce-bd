@@ -4,8 +4,6 @@ namespace App\GraphQL\Resolvers;
 
 use App\Models\Order;
 use App\Models\OrderProduct;
-use GraphQL\Type\Definition\ResolveInfo;
-//use GraphQL\Type\Definition\CustomScalarType;
 
 class OrdersResolver
 {
@@ -24,10 +22,7 @@ class OrdersResolver
             $orderResult = $orderModel->add($orderData);
 
             if (!$orderResult['success']) {
-                return [
-                    'success' => false,
-                    'message' => 'Failed to create order',
-                ];
+                return false;
             }
 
             $orderId = $orderResult['id'];
@@ -43,8 +38,7 @@ class OrdersResolver
                     'selected_currency' => $product['selected_currency'],
                 ]);
             }
-
-             return $orderId;
+            return $orderId;
              
         } catch (\Throwable $e) {
             error_log("OrdersResolver error: " . $e->getMessage());

@@ -12,10 +12,10 @@ class OrderItemInputType extends InputObjectType
         parent::__construct([
             'name' => 'OrderItemInput',
             'fields' => [
-                'product_id' => Type::string(), // nullable (ON DELETE SET NULL)
+                'product_id' => Type::string(),
                 'product_name' => Type::nonNull(Type::string()),
-                'attributes' => Type::nonNull(Type::string()), // JSON as string
-                'quantity' => Type::int(), // optional, defaults to 1
+                'attributes' => Type::nonNull(Type::string()),
+                'quantity' => Type::int(),
                 'amount' => Type::nonNull(Type::float()),
                 'selected_currency' => Type::nonNull(Type::string()),
             ],

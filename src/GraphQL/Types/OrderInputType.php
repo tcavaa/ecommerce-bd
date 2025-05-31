@@ -14,7 +14,7 @@ class OrderInputType extends InputObjectType
             'name' => 'OrderInput',
             'fields' => [
                 'currency' => Type::nonNull(Type::string()),
-                'status' => Type::string(), // optional: defaults to 'pending'
+                'status' => Type::string(),
                 'total_amount' => Type::nonNull(Type::float()),
                 'items' => Type::nonNull(Type::listOf(Type::nonNull(new OrderItemInputType()))),
             ],

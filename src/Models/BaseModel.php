@@ -21,6 +21,8 @@ abstract class BaseModel
 
     public function getById($id): array 
     {
-        return $this->db->query("SELECT * FROM {$this->table} WHERE id = :id", ['id' => $id])->getOrFail();
+        return $this->db->query(
+            "SELECT * FROM {$this->table} WHERE id = :id", ['id' => $id]
+            )->getOrFail();
     }
 }
