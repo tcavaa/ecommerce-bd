@@ -38,7 +38,6 @@ class Attribute extends BaseModel
                 );
             }
 
-            // This assumes one item per row; you might need smarter merging
             $attributes[$attrId]['items'][] = [
                 'id' => $row['item_id'],
                 'value' => $row['value'],

@@ -9,7 +9,7 @@ class AttributeFactory
         return match ($data['type']) {
             'text' => new TextAttribute($data),
             'swatch' => new SwatchAttribute($data),
-            // Add other types here
+            
             default => throw new \Exception("Unknown attribute type: " . $data['type']),
         };
     }
