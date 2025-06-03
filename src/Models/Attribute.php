@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Attributes\AttributeFactory;
+
 class Attribute extends BaseModel 
 {
     protected string $table = 'attributes';
@@ -29,14 +31,14 @@ class Attribute extends BaseModel
             $attrId = $row['attribute_id'];
 
             if (!isset($attributes[$attrId])) {
-                $attributes[$attrId] = [
-                    'id' => $attrId,
-                    'name' => $row['name'],
-                    'type' => $row['type'],
-                    'items' => [],
-                ];
+                $attributeType = AttributeFactory::make($row);
+                $attributes[$attrId] = array_merge(
+                    $attributeType->getBaseData(),
+                    ['items' => []]
+                );
             }
 
+            // This assumes one item per row; you might need smarter merging
             $attributes[$attrId]['items'][] = [
                 'id' => $row['item_id'],
                 'value' => $row['value'],
@@ -45,6 +47,5 @@ class Attribute extends BaseModel
         }
 
         return array_values($attributes);
-
     }
 }

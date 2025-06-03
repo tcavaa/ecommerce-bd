@@ -1,7 +1,7 @@
 <?php 
 
 namespace App\Models;
-use App\Models\Attribute;
+use App\Models\Attributes;
 use App\Models\Price;
 
 class Product extends BaseModel
