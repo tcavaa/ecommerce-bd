@@ -1,8 +1,8 @@
 <?php 
 
 namespace App\Models;
-use App\Models\Attributes;
-use App\Models\Price;
+
+use App\Models\Products\ProductFactory;
 
 class Product extends BaseModel
 {
@@ -18,26 +18,22 @@ class Product extends BaseModel
             $params['category'] = $category;
         }
 
-        $products = $this->db->query($query, $params)->get();
+        $productsData = $this->db->query($query, $params)->get();
+        $processedProducts = [];
 
-        foreach ($products as &$product) {
-            $product = $this->getProductDetails($product);
+        foreach ($productsData as $productData) {
+            $productInstance = ProductFactory::make($productData);
+            $processedProducts[] = $productInstance->getDetails();
         }
               
-        return $products;
+        return $processedProducts;
     }
 
-    public function getById($id): array
+    public function getById(string $id): array
     {
-        $product = parent::getById($id);
-        return $product ? self::getProductDetails($product) : null;
-    }
-
-    private static function getProductDetails(array $product): array
-    {
-        $product['attributes'] = (new Attribute())->getByPrId($product['id']);
-        $product['prices'] = (new Price())->getByPrId($product['id']);
-        $product['gallery'] = json_decode($product['gallery'], true);
-        return $product;
+        $productData = parent::getById($id); 
+        $productInstance = ProductFactory::make($productData);
+        
+        return $productInstance->getDetails();
     }
 }
